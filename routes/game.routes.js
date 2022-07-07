@@ -6,7 +6,8 @@ const {
     createGame,
     updateGame,
     deleteGame,
-    createReview
+    createReview,
+    assingGameToConsole
 } = require('../controllers/game.controller');
 
 // Middleware
@@ -21,7 +22,9 @@ gameRouter.use(protectSession);
 
 gameRouter.post('/', createGame);
 
-gameRouter
+gameRouter.post('/reviews/:id', gameExist, createReview);
+
+gameRouter.post('/assing-game', assingGameToConsole)
     .use('/reviews/:id', gameExist, createReview)
     .route('/:id')
     .patch(updateGame)

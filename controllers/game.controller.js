@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const { Game } = require('../models/game.model')
 const { Console } = require('../models/console.model');
 const { Review } = require('../models/review.model');
+const { GameinConsole } = require('../models/gameInConsole.model');
 
 dotenv.config({ path: './config.env' });
 
@@ -71,10 +72,22 @@ const createReview = catchAsync(async (req, res, next) => {
 
 });
 
+const assingGameToConsole = catchAsync(async (req, res, next) => {
+    const { gameId, consoleId } = req.body;
+
+    const gameInConsole = await GameinConsole.create({ gameId, consoleId })
+
+    res.status(200).json({
+        status: 'success',
+        gameInConsole
+    });
+})
+
 module.exports = {
     getAllRegistersGames,
     createGame,
     updateGame,
     deleteGame,
-    createReview
+    createReview,
+    assingGameToConsole
 };
